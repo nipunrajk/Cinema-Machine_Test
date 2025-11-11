@@ -1,5 +1,3 @@
-// src/components/Seat.tsx
-import React from 'react';
 import type { Seat as SeatType } from '../types';
 
 type Props = {
@@ -33,10 +31,18 @@ export default function Seat({ seat, selected, onToggle }: Props) {
 
   return (
     <button
+      role='gridcell'
       aria-label={ariaLabel}
       aria-pressed={selected}
       title={`${seat.id} — ${seat.tier} — ₹${seat.price}`}
       disabled={disabled}
+      onKeyDown={(e) => {
+        if (disabled) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onToggle(seat.id);
+        }
+      }}
       onClick={() => !disabled && onToggle(seat.id)}
       className={classes}
     >

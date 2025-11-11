@@ -1,4 +1,3 @@
-// src/components/SeatGrid.tsx
 import React, { useMemo } from 'react';
 import type { Seat } from '../types';
 import SeatComponent from './Seat';
@@ -33,7 +32,6 @@ export default function SeatGrid({ seats, selectedIds, onToggleSeat }: Props) {
 
   return (
     <div className='w-full'>
-      {/* optional legend header */}
       <div className='mb-3 flex items-center gap-3 text-sm text-slate-600'>
         <div className='flex items-center gap-1'>
           <span className='w-3 h-3 bg-slate-200 rounded-sm inline-block' />{' '}
@@ -51,13 +49,16 @@ export default function SeatGrid({ seats, selectedIds, onToggleSeat }: Props) {
 
       <div className='overflow-auto'>
         <div
+          role='grid'
+          aria-colcount={cols}
+          aria-rowcount={rows.length}
           className='grid gap-2'
           style={{
             gridTemplateColumns: `repeat(${cols}, minmax(36px, 1fr))`,
           }}
         >
           {seats.map((seat) => (
-            <div key={seat.id} className='flex items-center justify-center'>
+            <div key={seat.id} className='flex items-center justify-center' role='presentation'>
               <SeatComponent
                 seat={seat}
                 selected={selectedIds.includes(seat.id)}

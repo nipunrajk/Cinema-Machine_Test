@@ -1,5 +1,4 @@
-// src/pages/SeatSelectionPage.tsx
-import  { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { theatres } from '../data/theatres';
@@ -25,6 +24,14 @@ export default function SeatSelectionPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const successRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (successMessage && successRef.current) {
+      successRef.current.focus();
+    }
+  }, [successMessage]);
 
   // regenerate seats when theatre changes
   useEffect(() => {
@@ -143,10 +150,19 @@ export default function SeatSelectionPage() {
           />
 
           {/* error / success aria-live regions */}
-          <div className='mt-4'>
-            <div aria-live='polite' className='min-h-[1.2rem] text-sm'>
+          <div
+            tabIndex={-1}
+            ref={successRef}
+            aria-live='polite'
+            className='mt-4'
+          >
+            <div
+              aria-live='polite'
+              className='min-h-[1.2rem] text-sm'
+              id='seat-messages'
+            >
               {error ? (
-                <div className='text-sm text-red-600'>{error}</div>
+                <div className='text-sm text-red-600'>ss{error}</div>
               ) : null}
               {successMessage ? (
                 <div className='text-sm text-green-600'>{successMessage}</div>

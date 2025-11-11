@@ -1,5 +1,4 @@
-// src/components/SelectionSummary.tsx
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { Seat } from '../types';
 
 type Props = {
