@@ -1,5 +1,5 @@
 // src/pages/SeatSelectionPage.tsx
-import React, { useMemo, useState, useEffect } from 'react';
+import  { useMemo, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { theatres } from '../data/theatres';
@@ -8,7 +8,7 @@ import type { Seat } from '../types';
 import SeatGrid from '../components/SeatGrid';
 import SelectionSummary from '../components/SelectionSummary';
 
-export default function SeatSelectionPage(): JSX.Element {
+export default function SeatSelectionPage() {
   const params = useParams();
   const movieId = params.movieId ?? '';
   const theatreId = params.theatreId ?? '';
