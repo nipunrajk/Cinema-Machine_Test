@@ -1,57 +1,56 @@
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { movies } from '../data/movies';
+import { theatres } from '../data/theatres';
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams<{ movieId: string }>();
+  const movie = movies.find((m) => m.id === movieId);
 
-  // Placeholder — later replace with movie lookup by id from seed data
+  if (!movie) {
+    return (
+      <div className='py-16 text-center'>
+        <h2 className='text-2xl font-semibold'>Movie not found</h2>
+        <Link to='/' className='mt-4 inline-block text-blue-600 underline'>
+          Back to Movies
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h1 className='text-3xl font-semibold mb-4'>Movie: {movieId}</h1>
+      <Link to='/' className='text-blue-600 hover:underline mb-4 inline-block'>
+        ← Back to Movies
+      </Link>
 
-      <div className='grid md:grid-cols-2 gap-6'>
-        <div className='bg-white rounded shadow p-4'>
-          <div className='h-64 bg-slate-200 rounded mb-4 flex items-center justify-center text-slate-500'>
+      <div className='bg-white rounded shadow p-6 mb-6'>
+        <div className='flex gap-6'>
+          <div className='w-48 h-64 bg-slate-200 rounded flex items-center justify-center text-slate-500 shrink-0'>
             Poster
           </div>
-          <p className='text-slate-700'>
-            Short synopsis for <strong>{movieId}</strong>. Replace this with
-            real data from <code>src/data/movies.ts</code>.
-          </p>
-        </div>
-
-        <div className='space-y-4'>
-          <h2 className='text-xl font-medium'>Choose Theatre</h2>
-
-          <div className='bg-white rounded shadow p-4 flex items-center justify-between'>
-            <div>
-              <div className='font-semibold'>ABC-Multiplex</div>
-              <div className='text-sm text-slate-500'>
-                9 rows — Silver/Gold/Platinum
-              </div>
-            </div>
-            <Link
-              to={`/movies/${movieId}/theatres/abc`}
-              className='text-sm bg-blue-600 text-white px-3 py-1 rounded'
-            >
-              Select seats
-            </Link>
-          </div>
-
-          <div className='bg-white rounded shadow p-4 flex items-center justify-between'>
-            <div>
-              <div className='font-semibold'>XYZ-Multiplex</div>
-              <div className='text-sm text-slate-500'>
-                12 rows — Silver/Gold/Platinum
-              </div>
-            </div>
-            <Link
-              to={`/movies/${movieId}/theatres/xyz`}
-              className='text-sm bg-blue-600 text-white px-3 py-1 rounded'
-            >
-              Select seats
-            </Link>
+          <div>
+            <h1 className='text-3xl font-semibold mb-3'>{movie.title}</h1>
+            <p className='text-slate-600'>{movie.synopsis}</p>
           </div>
         </div>
+      </div>
+
+      <h2 className='text-2xl font-semibold mb-4'>Select a Theatre</h2>
+      <div className='grid gap-4'>
+        {theatres.map((theatre) => (
+          <div key={theatre.id} className='bg-white rounded shadow p-4'>
+            <h3 className='font-medium text-lg mb-2'>{theatre.name}</h3>
+            <p className='text-sm text-slate-600 mb-3'>
+              {theatre.rows} rows × {theatre.seatsPerRow} seats
+            </p>
+            <Link
+              to={`/movies/${movie.id}/theatres/${theatre.id}`}
+              className='inline-block text-sm text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700'
+            >
+              Select Seats
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );

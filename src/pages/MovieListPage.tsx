@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom';
+import { movies } from '../data/movies';
 
 export default function MovieListPage() {
-  // Placeholder movies — later you'll import seed data from src/data/movies.ts
-  const movies = [
-    { id: 'm1', title: 'Movie One' },
-    { id: 'm2', title: 'Movie Two' },
-    { id: 'm3', title: 'Movie Three' },
-    { id: 'm4', title: 'Movie Four' },
-  ];
-
   return (
     <div>
       <h1 className='text-3xl font-semibold mb-6'>Movies</h1>
