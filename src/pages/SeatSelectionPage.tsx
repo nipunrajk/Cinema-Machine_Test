@@ -12,13 +12,13 @@ export default function SeatSelectionPage() {
   const movieId = params.movieId ?? '';
   const theatreId = params.theatreId ?? '';
 
-  // find theatre (for display only)
+  // find theatre
   const theatre = useMemo(
     () => theatres.find((t) => t.id === theatreId),
     [theatreId]
   );
 
-  // Zustand store selectors & actions
+  // store selectors & actions
   const setTheatre = useSeatStore((s) => s.setTheatre);
   const seats = useSeatStore((s) => s.seats);
   const selectedIds = useSeatStore((s) => s.selectedIds);
@@ -28,7 +28,7 @@ export default function SeatSelectionPage() {
   const error = useSeatStore((s) => s.error);
   const successMessage = useSeatStore((s) => s.successMessage);
 
-  // focus for success messages (accessibility)
+  // focus for success messages
   const successRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (successMessage && successRef.current) {
@@ -41,8 +41,6 @@ export default function SeatSelectionPage() {
     if (theatreId) {
       setTheatre(theatreId);
     }
-    // do not add setTheatre to dependencies to avoid unnecessary re-runs
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theatreId]);
 
   // computed lookups
@@ -106,7 +104,6 @@ export default function SeatSelectionPage() {
             onToggleSeat={toggleSeat}
           />
 
-          {/* error / success aria-live regions */}
           <div
             tabIndex={-1}
             ref={successRef}
@@ -128,7 +125,6 @@ export default function SeatSelectionPage() {
           </div>
         </div>
 
-        {/* Selection summary */}
         <div className='mt-4 md:mt-0'>
           <SelectionSummary
             selectedSeats={selectedSeats}
