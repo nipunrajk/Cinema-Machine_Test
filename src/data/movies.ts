@@ -1,4 +1,3 @@
-// src/data/movies.ts
 import type { Movie } from '../types';
 
 export const movies: Movie[] = [
@@ -18,7 +17,7 @@ export const movies: Movie[] = [
   },
   {
     id: 'm3',
-    title: 'Last Train Home',
+    title: 'Minions',
     posterUrl: '/posters/minions.jpg',
     synopsis:
       'Minions Stuart, Kevin, and Bob are recruited by Scarlet Overkill, a supervillain who, alongside her inventor husband Herb, hatches a plot to take over the world.',
