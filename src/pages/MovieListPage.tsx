@@ -11,8 +11,13 @@ export default function MovieListPage() {
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         {movies.map((m) => (
           <div key={m.id} className='bg-white rounded shadow p-4'>
-            <div className='h-40 bg-slate-200 rounded mb-3 flex items-center justify-center text-slate-500'>
-              Poster
+            <div className='h-40 bg-slate-200 rounded mb-3 overflow-hidden'>
+              <img
+                src={m.posterUrl}
+                alt={m.title}
+                className='w-full h-full object-cover'
+              />
+              )
             </div>
             <h3 className='font-medium'>{m.title}</h3>
             <Link

@@ -4,30 +4,30 @@ import type { Movie } from '../types';
 export const movies: Movie[] = [
   {
     id: 'm1',
-    title: 'The Midnight Voyager',
-    posterUrl: '/posters/midnight-voyager.jpg',
+    title: 'Dies Irae',
+    posterUrl: '/posters/pranav.jpg',
     synopsis:
-      'A small crew ventures into a mysterious nebula and finds strange new worlds.',
+      "Rohan's affluent lifestyle spirals out of control as he becomes convinced there is a supernatural entity in his home. As he uncovers the mystery, he is drawn into unexpected realms and alliances, along with the horrors that lie ahead.",
   },
   {
     id: 'm2',
-    title: 'City of Echoes',
-    posterUrl: '/posters/city-of-echoes.jpg',
+    title: 'Game of Thrones',
+    posterUrl: '/posters/GOT.jpg',
     synopsis:
-      'Two strangers meet in a city where memories are traded like currency.',
+      'Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for millennia.',
   },
   {
     id: 'm3',
     title: 'Last Train Home',
-    posterUrl: '/posters/last-train-home.jpg',
+    posterUrl: '/posters/minions.jpg',
     synopsis:
-      'A bittersweet drama that follows one night on the last train into town.',
+      'Minions Stuart, Kevin, and Bob are recruited by Scarlet Overkill, a supervillain who, alongside her inventor husband Herb, hatches a plot to take over the world.',
   },
   {
     id: 'm4',
-    title: 'Neon Gardens',
-    posterUrl: '/posters/neon-gardens.jpg',
+    title: 'Ravanaprabhu',
+    posterUrl: '/posters/Ravanaprabhu.jpg',
     synopsis:
-      'An energetic sci-fi heist that takes place inside a living, electric greenhouse.',
+      "A son becomes a liquor baron against his father's wishes. After losing their ancestral home to an enemy, he kidnaps the enemy's daughter for revenge but falls in love with her, leading to conflict between the families.",
   },
 ];

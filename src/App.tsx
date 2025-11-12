@@ -11,7 +11,7 @@ function Header() {
     <header className='bg-white shadow-sm p-4 sticky top-0 z-10'>
       <div className='max-w-6xl mx-auto flex items-center justify-between'>
         <Link to='/' className='text-2xl font-bold text-slate-800'>
-          SeatBooker (MVP)
+          Cinema
         </Link>
         <nav className='text-sm text-slate-600'>
           <Link to='/' className='mr-4 hover:underline'>
