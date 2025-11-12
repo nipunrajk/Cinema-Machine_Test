@@ -1,4 +1,3 @@
-// src/data/theatres.ts
 import type { Theatre } from '../types';
 
 /**
