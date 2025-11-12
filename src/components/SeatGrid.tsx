@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { Seat } from '../types';
 import SeatComponent from './Seat';
 
@@ -58,7 +58,11 @@ export default function SeatGrid({ seats, selectedIds, onToggleSeat }: Props) {
           }}
         >
           {seats.map((seat) => (
-            <div key={seat.id} className='flex items-center justify-center' role='presentation'>
+            <div
+              key={seat.id}
+              className='flex items-center justify-center'
+              role='presentation'
+            >
               <SeatComponent
                 seat={seat}
                 selected={selectedIds.includes(seat.id)}
