@@ -10,7 +10,6 @@
     "preview": "vite preview",
     "test": "jest --colors",
     "test:watch": "jest --watch",
-    "prepare": "husky"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
