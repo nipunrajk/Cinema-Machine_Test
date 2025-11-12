@@ -6,6 +6,7 @@ import type { Seat } from '../types';
 import SeatGrid from '../components/SeatGrid';
 import SelectionSummary from '../components/SelectionSummary';
 import { useSeatStore } from '../store/useSeatStore';
+import toast from 'react-hot-toast';
 
 export default function SeatSelectionPage() {
   const params = useParams();
@@ -55,6 +56,15 @@ export default function SeatSelectionPage() {
     [selectedIds, seatById]
   );
 
+  // Toaster
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (successMessage) toast.success(successMessage);
+  }, [successMessage]);
+
   if (!theatre) {
     return (
       <div>
@@ -103,26 +113,6 @@ export default function SeatSelectionPage() {
             selectedIds={selectedIds}
             onToggleSeat={toggleSeat}
           />
-
-          <div
-            tabIndex={-1}
-            ref={successRef}
-            aria-live='polite'
-            className='mt-4'
-          >
-            <div
-              aria-live='polite'
-              className='min-h-[1.2rem] text-sm'
-              id='seat-messages'
-            >
-              {error ? (
-                <div className='text-sm text-red-600'>{error}</div>
-              ) : null}
-              {successMessage ? (
-                <div className='text-sm text-green-600'>{successMessage}</div>
-              ) : null}
-            </div>
-          </div>
         </div>
 
         <div className='mt-4 md:mt-0'>

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import MovieListPage from './pages/MovieListPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import SeatSelectionPage from './pages/SeatSelectionPage';
+import { Toaster } from 'react-hot-toast';
 
 /**
  * Small header used across pages — keeps things simple for the assignment test.
@@ -11,7 +12,7 @@ function Header() {
     <header className='bg-white shadow-sm p-4 sticky top-0 z-10'>
       <div className='max-w-6xl mx-auto flex items-center justify-between'>
         <Link to='/' className='text-2xl font-bold text-slate-800'>
-          SeatBooker (MVP)
+          Cinema
         </Link>
         <nav className='text-sm text-slate-600'>
           <Link to='/' className='mr-4 hover:underline'>
@@ -53,6 +54,7 @@ export default function App() {
             />
           </Routes>
         </main>
+        <Toaster position='top-right' reverseOrder={false} />
       </div>
     </BrowserRouter>
   );

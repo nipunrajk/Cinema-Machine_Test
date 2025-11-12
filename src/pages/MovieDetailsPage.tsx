@@ -28,8 +28,13 @@ export default function MovieDetailsPage() {
 
       <div className='bg-white rounded shadow p-6 mb-6'>
         <div className='flex gap-6'>
-          <div className='w-48 h-64 bg-slate-200 rounded flex items-center justify-center text-slate-500 shrink-0'>
-            Poster
+          <div className='w-48 h-64 bg-slate-200 rounded overflow-hidden shrink-0'>
+            <img
+              src={movie.posterUrl}
+              alt={movie.title}
+              className='w-full h-full object-cover'
+            />
+            )
           </div>
           <div>
             <h1 className='text-3xl font-semibold mb-3'>{movie.title}</h1>
