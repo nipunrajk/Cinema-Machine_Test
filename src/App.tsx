@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import MovieListPage from './pages/MovieListPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import SeatSelectionPage from './pages/SeatSelectionPage';
+import { Toaster } from 'react-hot-toast';
 
 /**
  * Small header used across pages — keeps things simple for the assignment test.
@@ -53,6 +54,7 @@ export default function App() {
             />
           </Routes>
         </main>
+        <Toaster position='top-right' reverseOrder={false} />
       </div>
     </BrowserRouter>
   );
