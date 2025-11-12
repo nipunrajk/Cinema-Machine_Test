@@ -162,7 +162,7 @@ export default function SeatSelectionPage() {
               id='seat-messages'
             >
               {error ? (
-                <div className='text-sm text-red-600'>ss{error}</div>
+                <div className='text-sm text-red-600'>{error}</div>
               ) : null}
               {successMessage ? (
                 <div className='text-sm text-green-600'>{successMessage}</div>
