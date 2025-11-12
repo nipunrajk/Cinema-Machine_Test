@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# Flintech software services - assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Seat Booking App (React + TypeScript)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+| Layer | Tech |
+|-------|------|
+| Framework | **React 19 + TypeScript + Vite** |
+| Styling | **Tailwind CSS** |
+| State Management | **Zustand** |
+| Routing | **React Router v7** |
+| Notifications | **React Hot Toast** |
+| Testing | **Jest + React Testing Library** |
+| Code Quality | **ESLint + Prettier + Husky (pre-commit)** |
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+---
 
-## Expanding the ESLint configuration
+## User Flow
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Movies Page** – Displays a grid of movies.  
+   ➜ Click **“View Details”** to open a specific movie.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Movie Details Page** – Shows movie info and two theatres (ABC / XYZ).  
+   ➜ Click **“Select Seats”** for a chosen theatre.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+3. **Seat Selection Page** – Interactive seat grid:
+   - Seats labeled (A1–J10), grouped by tier:
+     -  Silver ₹100  
+     -  Gold ₹150  
+     -  Platinum ₹200
+   - Click to **select / deselect** (max 8 seats).
+   - Disabled (booked) seats are unclickable.
+   - Real-time total updates in the summary.
+   - Press **“Book Now”** → Confirm → Seats marked as booked.
+   - Toast notifications for success/error.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+4. **Testing**
+   - Covers seat selection, max-8 rule, and booking flow.
+
+## How to Run
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Run tests
+npm test
+
+# Run with lint before commit (Husky pre-commit)
+npm run prepare
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Features Implemented
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Responsiveness
+- Unit testing
+- Accessibility
+- Husky pre-commit hook for tests
+- Persistance over refresh using zustand. 
+- Toast notification
