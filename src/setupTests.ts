@@ -10,3 +10,17 @@ if (typeof globalThis.TextEncoder === 'undefined') {
   globalThis.TextEncoder = util.TextEncoder;
   globalThis.TextDecoder = util.TextDecoder;
 }
+
+// Mock window.matchMedia (used by some UI libs like react-hot-toast)
+if (typeof window.matchMedia === 'undefined') {
+  window.matchMedia = () => ({
+    matches: false,
+    media: '',
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+  });
+}

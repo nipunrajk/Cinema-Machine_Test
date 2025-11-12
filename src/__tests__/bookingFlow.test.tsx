@@ -2,18 +2,28 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import SeatSelectionPage from '../pages/SeatSelectionPage';
+import { Toaster } from 'react-hot-toast';
+import { useSeatStore } from '../store/useSeatStore';
+
+beforeEach(() => {
+  useSeatStore.getState().reset();
+  localStorage.clear();
+});
 
 function renderSeatPageFor(theatreId = 'abc') {
   const entry = `/movies/m-test/theatres/${theatreId}`;
   render(
-    <MemoryRouter initialEntries={[entry]}>
-      <Routes>
-        <Route
-          path='/movies/:movieId/theatres/:theatreId'
-          element={<SeatSelectionPage />}
-        />
-      </Routes>
-    </MemoryRouter>
+    <>
+      <Toaster />
+      <MemoryRouter initialEntries={[entry]}>
+        <Routes>
+          <Route
+            path='/movies/:movieId/theatres/:theatreId'
+            element={<SeatSelectionPage />}
+          />
+        </Routes>
+      </MemoryRouter>
+    </>
   );
 }
 

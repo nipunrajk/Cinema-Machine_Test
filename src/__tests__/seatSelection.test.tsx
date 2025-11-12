@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import SeatSelectionPage from '../pages/SeatSelectionPage';
 import { useSeatStore } from '../store/useSeatStore';
 import '@testing-library/jest-dom';
+import { Toaster } from 'react-hot-toast';
 
 beforeEach(() => {
   // Reset store before each test to avoid state leakage
@@ -15,14 +16,17 @@ beforeEach(() => {
 function renderSeatPageFor(theatreId = 'abc') {
   const entry = `/movies/m-test/theatres/${theatreId}`;
   render(
-    <MemoryRouter initialEntries={[entry]}>
-      <Routes>
-        <Route
-          path='/movies/:movieId/theatres/:theatreId'
-          element={<SeatSelectionPage />}
-        />
-      </Routes>
-    </MemoryRouter>
+    <>
+      <Toaster position='top-right' />
+      <MemoryRouter initialEntries={[entry]}>
+        <Routes>
+          <Route
+            path='/movies/:movieId/theatres/:theatreId'
+            element={<SeatSelectionPage />}
+          />
+        </Routes>
+      </MemoryRouter>
+    </>
   );
 }
 
