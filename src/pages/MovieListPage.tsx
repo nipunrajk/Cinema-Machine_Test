@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { movies } from '../data/movies';
+import { useSeatStore } from '../store/useSeatStore';
 
 export default function MovieListPage() {
+  const setMovie = useSeatStore((s) => s.setMovie);
+
   return (
     <div>
       <h1 className='text-3xl font-semibold mb-6'>Movies</h1>
@@ -14,6 +17,7 @@ export default function MovieListPage() {
             <h3 className='font-medium'>{m.title}</h3>
             <Link
               to={`/movies/${m.id}`}
+              onClick={() => setMovie(m.id)}
               className='inline-block mt-3 text-sm text-white bg-blue-600 px-3 py-1 rounded'
             >
               View details

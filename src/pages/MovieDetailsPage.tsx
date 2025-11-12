@@ -1,10 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
 import { movies } from '../data/movies';
 import { theatres } from '../data/theatres';
+import { useSeatStore } from '../store/useSeatStore';
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams<{ movieId: string }>();
   const movie = movies.find((m) => m.id === movieId);
+  const setTheatre = useSeatStore((s) => s.setTheatre);
+  const setMovie = useSeatStore((s) => s.setMovie);
 
   if (!movie) {
     return (
@@ -45,6 +48,10 @@ export default function MovieDetailsPage() {
             </p>
             <Link
               to={`/movies/${movie.id}/theatres/${theatre.id}`}
+              onClick={() => {
+                setMovie(movie.id);
+                setTheatre(theatre.id);
+              }}
               className='inline-block text-sm text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700'
             >
               Select Seats

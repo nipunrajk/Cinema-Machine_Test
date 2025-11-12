@@ -1,104 +1,59 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { theatres } from '../data/theatres';
-import { generateSeats } from '../utils/seatGenerator';
 import type { Seat } from '../types';
 import SeatGrid from '../components/SeatGrid';
 import SelectionSummary from '../components/SelectionSummary';
+import { useSeatStore } from '../store/useSeatStore';
 
 export default function SeatSelectionPage() {
   const params = useParams();
   const movieId = params.movieId ?? '';
   const theatreId = params.theatreId ?? '';
 
+  // find theatre
   const theatre = useMemo(
     () => theatres.find((t) => t.id === theatreId),
     [theatreId]
   );
-  // seatsState will allow us to mark seats as booked after a booking
-  const [seatsState, setSeatsState] = useState<Seat[]>(() =>
-    theatre ? generateSeats(theatre) : []
-  );
-  // selected seat ids
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  // store selectors & actions
+  const setTheatre = useSeatStore((s) => s.setTheatre);
+  const seats = useSeatStore((s) => s.seats);
+  const selectedIds = useSeatStore((s) => s.selectedIds);
+  const toggleSeat = useSeatStore((s) => s.toggleSeat);
+  const clearSelection = useSeatStore((s) => s.clearSelection);
+  const bookSelected = useSeatStore((s) => s.bookSelected);
+  const error = useSeatStore((s) => s.error);
+  const successMessage = useSeatStore((s) => s.successMessage);
+
+  // focus for success messages
   const successRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     if (successMessage && successRef.current) {
       successRef.current.focus();
     }
   }, [successMessage]);
 
-  // regenerate seats when theatre changes
+  // when theatreId changes, let the store generate seats
   useEffect(() => {
-    if (theatre) {
-      setSeatsState(generateSeats(theatre));
-      setSelectedIds([]);
-      setError(null);
-      setSuccessMessage(null);
+    if (theatreId) {
+      setTheatre(theatreId);
     }
-  }, [theatre]);
+  }, [theatreId]);
 
-  // helpers
+  // computed lookups
   const seatById = useMemo(() => {
     const m = new Map<string, Seat>();
-    seatsState.forEach((s) => m.set(s.id, s));
+    seats.forEach((s) => m.set(s.id, s));
     return m;
-  }, [seatsState]);
+  }, [seats]);
 
   const selectedSeats = useMemo(
     () => selectedIds.map((id) => seatById.get(id)!).filter(Boolean),
     [selectedIds, seatById]
   );
-
-  // toggle selection with max 8 logic
-  const toggleSeat = (seatId: string) => {
-    const seat = seatById.get(seatId);
-    if (!seat) return;
-
-    if (seat.status === 'booked') return; // can't select booked
-
-    const already = selectedIds.includes(seatId);
-    if (already) {
-      setSelectedIds((s) => s.filter((x) => x !== seatId));
-      return;
-    }
-
-    // selecting new seat
-    if (selectedIds.length >= 8) {
-      setError('You can only select up to 8 seats.');
-      // clear error after 2.5s
-      window.setTimeout(() => setError(null), 2500);
-      return;
-    }
-
-    setSelectedIds((s) => [...s, seatId]);
-  };
-
-  const clearSelection = () => {
-    setSelectedIds([]);
-    setError(null);
-  };
-
-  const handleBook = () => {
-    if (selectedIds.length === 0) return;
-    // mark selected seats as booked in seatsState
-    setSeatsState((prev) =>
-      prev.map((s) =>
-        selectedIds.includes(s.id) ? { ...s, status: 'booked' } : s
-      )
-    );
-    setSuccessMessage(
-      `Booked ${selectedIds.length} seat(s): ${selectedIds.join(', ')}.`
-    );
-    setSelectedIds([]);
-    // clear success after a while
-    window.setTimeout(() => setSuccessMessage(null), 4000);
-  };
 
   if (!theatre) {
     return (
@@ -144,12 +99,11 @@ export default function SeatSelectionPage() {
           </div>
 
           <SeatGrid
-            seats={seatsState}
+            seats={seats}
             selectedIds={selectedIds}
             onToggleSeat={toggleSeat}
           />
 
-          {/* error / success aria-live regions */}
           <div
             tabIndex={-1}
             ref={successRef}
@@ -171,11 +125,10 @@ export default function SeatSelectionPage() {
           </div>
         </div>
 
-        {/* Selection summary */}
         <div className='mt-4 md:mt-0'>
           <SelectionSummary
             selectedSeats={selectedSeats}
-            onBook={handleBook}
+            onBook={bookSelected}
             onClear={clearSelection}
           />
         </div>

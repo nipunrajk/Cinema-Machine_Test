@@ -2,6 +2,15 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import SeatSelectionPage from '../pages/SeatSelectionPage';
+import { useSeatStore } from '../store/useSeatStore';
+import '@testing-library/jest-dom';
+
+beforeEach(() => {
+  // Reset store before each test to avoid state leakage
+  useSeatStore.getState().reset();
+  // Clear localStorage to reset persisted state
+  localStorage.clear();
+});
 
 function renderSeatPageFor(theatreId = 'abc') {
   const entry = `/movies/m-test/theatres/${theatreId}`;
