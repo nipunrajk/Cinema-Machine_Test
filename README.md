@@ -2,6 +2,7 @@
 
 ## Seat Booking App (React + TypeScript)
 
+![Seat Booking Screenshot](./public/screenshot.png)
 
 ## Tech Stack
 
@@ -63,3 +64,4 @@ npm run prepare
 - Husky pre-commit hook for tests
 - Persistance over refresh using zustand. 
 - Toast notification
+
