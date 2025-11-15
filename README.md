@@ -6,15 +6,17 @@
 
 ## Tech Stack
 
-| Layer | Tech |
-|-------|------|
-| Framework | **React 19 + TypeScript + Vite** |
-| Styling | **Tailwind CSS** |
-| State Management | **Zustand** |
-| Routing | **React Router v7** |
-| Notifications | **React Hot Toast** |
-| Testing | **Jest + React Testing Library** |
-| Code Quality | **ESLint + Prettier + Husky (pre-commit)** |
+| Layer              | Tech                                       |
+| ------------------ | ------------------------------------------ |
+| Framework          | **React 19 + TypeScript + Vite**           |
+| UI Components      | **Kendo UI for React**                     |
+| Styling            | **Tailwind CSS + Kendo Theme**             |
+| State Management   | **Zustand**                                |
+| Routing            | **React Router v7**                        |
+| Notifications      | **React Hot Toast**                        |
+| Testing            | **Jest + React Testing Library**           |
+| Backend As Service | **Supabase**                               |
+| Code Quality       | **ESLint + Prettier + Husky (pre-commit)** |
 
 ---
 
@@ -27,10 +29,11 @@
    ➜ Click **“Select Seats”** for a chosen theatre.
 
 3. **Seat Selection Page** – Interactive seat grid:
+
    - Seats labeled (A1–J10), grouped by tier:
-     -  Silver ₹100  
-     -  Gold ₹150  
-     -  Platinum ₹200
+     - Silver ₹100
+     - Gold ₹150
+     - Platinum ₹200
    - Click to **select / deselect** (max 8 seats).
    - Disabled (booked) seats are unclickable.
    - Real-time total updates in the summary.
@@ -58,10 +61,12 @@ npm run prepare
 
 ### Features Implemented
 
+- Kendo UI React components (Cards, Buttons, Layout)
 - Responsiveness
 - Unit testing
 - Accessibility
 - Husky pre-commit hook for tests
-- Persistance over refresh using zustand. 
+- Persistance over refresh using zustand
 - Toast notification
-
+- UI with Kendo theming
+- Supabase Backend added
