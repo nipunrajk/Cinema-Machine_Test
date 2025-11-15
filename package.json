@@ -12,7 +12,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@progress/kendo-react-buttons": "^13.0.0",
+    "@progress/kendo-react-common": "^13.0.0",
+    "@progress/kendo-react-layout": "^13.0.0",
+    "@progress/kendo-theme-default": "^12.2.3",
+    "@supabase/supabase-js": "^2.81.1",
     "@tailwindcss/vite": "^4.1.17",
+    "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hot-toast": "^2.6.0",

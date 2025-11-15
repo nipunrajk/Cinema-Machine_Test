@@ -45,8 +45,8 @@ test('booking flow: select seats -> confirm -> seats become booked and selection
   const confirm = await screen.findByRole('button', { name: /Confirm/i });
   await user.click(confirm);
 
-  // Success message should appear
-  expect(await screen.findByText(/Booked 2 seat\(s\)/i)).toBeInTheDocument();
+  // Success message should appear (now includes booking code)
+  expect(await screen.findByText(/Booking confirmed/i)).toBeInTheDocument();
 
   // Seats previously selected should now be disabled (booked)
   const bookedSeat1 = screen.getByRole('gridcell', { name: /^Seat A1,/i });
@@ -56,9 +56,6 @@ test('booking flow: select seats -> confirm -> seats become booked and selection
   expect(bookedSeat1.closest('button')).toBeDisabled();
   expect(bookedSeat2.closest('button')).toBeDisabled();
 
-  // Summary should show no selected seats (Selected (0) or "No seats selected")
-  // Either of these is acceptable depending on UI; check for either
-  expect(
-    screen.queryByText(/Selected \(\d+\)/i) // ensure not showing previous selection
-  ).toBeTruthy();
+  // Summary should show "No seats selected"
+  expect(screen.getByText(/No seats selected/i)).toBeInTheDocument();
 });

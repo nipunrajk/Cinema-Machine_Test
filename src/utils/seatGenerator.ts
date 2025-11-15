@@ -19,7 +19,6 @@ function getTierForRow(rowIndex: number, theatre: Theatre): Tier {
 
 export function generateSeats(theatre: Theatre): Seat[] {
   const seats: Seat[] = [];
-  const booked = new Set(theatre.bookedSeats ?? []);
 
   for (let r = 0; r < theatre.rows; r++) {
     const rowLetter = String.fromCharCode(65 + r);
@@ -28,7 +27,6 @@ export function generateSeats(theatre: Theatre): Seat[] {
     for (let c = 0; c < theatre.seatsPerRow; c++) {
       const id = `${rowLetter}${c + 1}`;
       const price = tierPrice[tier];
-      const status: Seat['status'] = booked.has(id) ? 'booked' : 'available';
 
       seats.push({
         id,
@@ -36,7 +34,7 @@ export function generateSeats(theatre: Theatre): Seat[] {
         colIndex: c,
         tier,
         price,
-        status,
+        status: 'available',
       });
     }
   }

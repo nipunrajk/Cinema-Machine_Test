@@ -1,15 +1,19 @@
 import { useMemo, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 import { theatres } from '../data/theatres';
 import type { Seat } from '../types';
 import SeatGrid from '../components/SeatGrid';
 import SelectionSummary from '../components/SelectionSummary';
+import BookingTimer from '../components/BookingTimer';
+import TimerExpiredModal from '../components/TimerExpiredModal';
 import { useSeatStore } from '../store/useSeatStore';
 import toast from 'react-hot-toast';
+import { ArrowLeft } from 'lucide-react';
 
 export default function SeatSelectionPage() {
   const params = useParams();
+  const navigate = useNavigate();
   const movieId = params.movieId ?? '';
   const theatreId = params.theatreId ?? '';
 
@@ -62,8 +66,15 @@ export default function SeatSelectionPage() {
   }, [error]);
 
   useEffect(() => {
-    if (successMessage) toast.success(successMessage);
-  }, [successMessage]);
+    if (successMessage) {
+      toast.success(successMessage);
+      const timer = setTimeout(() => {
+        navigate('/');
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage, navigate]);
 
   if (!theatre) {
     return (
@@ -90,24 +101,19 @@ export default function SeatSelectionPage() {
   return (
     <div>
       <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-2xl font-semibold'>
-          Seats — {movieId} / {theatre.name}
-        </h1>
         <Link
           to={`/movies/${movieId}`}
-          className='text-sm text-slate-600 underline'
+          className='flex items-center gap-2 text-slate-600 hover:text-slate-900'
         >
+          <ArrowLeft className='w-5 h-5' />
           Back to movie
         </Link>
       </div>
 
-      <div className='md:flex md:items-start md:gap-6'>
-        {/* Seat grid */}
-        <div className='md:flex-1 bg-white rounded shadow p-6'>
-          <div className='mb-4 text-sm text-slate-600'>
-            Click seats to select. Max 8 seats.
-          </div>
+      <BookingTimer />
 
+      <div className='flex flex-col lg:flex-row gap-4 lg:gap-6'>
+        <div className='flex-1 bg-white rounded-lg border border-slate-200 p-4 lg:p-6'>
           <SeatGrid
             seats={seats}
             selectedIds={selectedIds}
@@ -115,7 +121,7 @@ export default function SeatSelectionPage() {
           />
         </div>
 
-        <div className='mt-4 md:mt-0'>
+        <div className='w-full lg:w-80'>
           <SelectionSummary
             selectedSeats={selectedSeats}
             onBook={bookSelected}
@@ -123,6 +129,8 @@ export default function SeatSelectionPage() {
           />
         </div>
       </div>
+
+      <TimerExpiredModal />
     </div>
   );
 }
