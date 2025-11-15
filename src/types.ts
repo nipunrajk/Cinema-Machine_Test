@@ -5,6 +5,7 @@ export interface Movie {
   title: string;
   posterUrl?: string;
   synopsis?: string;
+  fullSynopsis?: string;
 }
 
 export interface TierBand {

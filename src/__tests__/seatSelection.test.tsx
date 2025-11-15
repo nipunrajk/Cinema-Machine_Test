@@ -38,9 +38,9 @@ test('selecting a seat shows it in the selection summary and updates total', asy
   const seatA1 = await screen.findByRole('gridcell', { name: /^Seat A1,/i });
   await user.click(seatA1);
 
-  // the selection summary heading is present
+  // the booking summary heading is present
   const summaryHeading = screen.getByRole('heading', {
-    name: /Selection Summary/i,
+    name: /Booking Summary/i,
   });
   expect(summaryHeading).toBeInTheDocument();
 
@@ -48,9 +48,8 @@ test('selecting a seat shows it in the selection summary and updates total', asy
   const summaryPanel = summaryHeading.closest('div')!;
   const withinSummary = within(summaryPanel);
 
-  // expect selected count and seat id in the summary area
-  expect(withinSummary.getByText(/Selected \(1\)/i)).toBeInTheDocument();
-  expect(withinSummary.getByText(/A1 · SILVER/)).toBeInTheDocument();
+  // expect seat id in the summary area
+  expect(withinSummary.getByText(/A1 · Silver/)).toBeInTheDocument();
 
   // find the Total within the summary area and assert its parent contains the price
   const totalLabel = withinSummary.getByText('Total');
@@ -72,7 +71,16 @@ test('selecting more than 8 seats shows max-8 error and blocks 9th', async () =>
     await user.click(el);
   }
 
-  expect(screen.getByText(/Selected \(8\)/i)).toBeInTheDocument();
+  // Check that 8 seats are selected by counting selected seats in the summary
+  const summaryHeading = screen.getByRole('heading', {
+    name: /Booking Summary/i,
+  });
+  const summaryPanel = summaryHeading.closest('div')!;
+  const withinSummary = within(summaryPanel);
+
+  // Should have 8 seat entries in the summary
+  const seatEntries = withinSummary.getAllByText(/[A-Z]\d+ · /);
+  expect(seatEntries).toHaveLength(8);
 
   // attempt 9th
   const ninth = await screen.findByRole('gridcell', {
@@ -84,5 +92,13 @@ test('selecting more than 8 seats shows max-8 error and blocks 9th', async () =>
   expect(
     screen.getByText(/You can only select up to 8 seats/i)
   ).toBeInTheDocument();
-  expect(screen.getByText(/Selected \(8\)/i)).toBeInTheDocument();
+
+  // Should still have 8 seat entries in the summary
+  const summaryHeading2 = screen.getByRole('heading', {
+    name: /Booking Summary/i,
+  });
+  const summaryPanel2 = summaryHeading2.closest('div')!;
+  const withinSummary2 = within(summaryPanel2);
+  const seatEntries2 = withinSummary2.getAllByText(/[A-Z]\d+ · /);
+  expect(seatEntries2).toHaveLength(8);
 });

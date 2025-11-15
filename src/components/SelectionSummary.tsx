@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
+import { Button } from '@progress/kendo-react-buttons';
 import type { Seat } from '../types';
 
 type Props = {
-  selectedSeats: Seat[]; // full seat objects for selected IDs
+  selectedSeats: Seat[];
   onBook: () => void;
   onClear: () => void;
 };
@@ -20,55 +21,58 @@ export default function SelectionSummary({
   );
 
   return (
-    <div className='w-full md:w-80'>
-      <div className='bg-white rounded shadow p-4 space-y-3'>
-        <h3 className='text-lg font-medium'>Selection Summary</h3>
+    <div className='w-full'>
+      <div className='bg-white rounded-lg border border-slate-200 p-4 lg:p-6 space-y-3 lg:space-y-4'>
+        <h3 className='text-base lg:text-lg font-semibold'>Booking Summary</h3>
 
-        <div className='text-sm text-slate-600'>
-          <div className='mb-2'>Selected ({selectedSeats.length})</div>
-
+        <div className='min-h-[80px] lg:min-h-[120px]'>
           {selectedSeats.length === 0 ? (
-            <div className='text-xs text-slate-400'>No seats selected</div>
+            <div className='flex items-center justify-center h-full text-slate-400 text-sm'>
+              No seats selected
+            </div>
           ) : (
-            <ul className='max-h-36 overflow-auto space-y-1'>
+            <div className='space-y-1.5 lg:space-y-2 max-h-32 lg:max-h-40 overflow-y-auto'>
               {selectedSeats.map((s) => (
-                <li key={s.id} className='flex justify-between text-sm'>
-                  <span>
-                    {s.id} · {s.tier}
+                <div key={s.id} className='flex justify-between text-sm'>
+                  <span className='text-slate-700'>
+                    {s.id} · {s.tier.charAt(0) + s.tier.slice(1).toLowerCase()}
                   </span>
-                  <span>₹{s.price}</span>
-                </li>
+                  <span className='font-medium'>₹{s.price}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
 
-        <div className='flex items-center justify-between pt-2 border-t'>
-          <div className='text-sm text-slate-700 font-semibold'>Total</div>
-          <div className='text-lg font-semibold'>₹{total}</div>
-        </div>
+        {selectedSeats.length > 0 && (
+          <div className='flex items-center justify-between pt-2 lg:pt-3 border-t'>
+            <div className='text-slate-700 font-medium'>Total</div>
+            <div className='text-lg lg:text-xl font-semibold'>₹{total}</div>
+          </div>
+        )}
 
-        <div className='flex gap-2'>
-          <button
-            className='flex-1 bg-blue-600 text-white px-3 py-2 rounded disabled:opacity-60'
+        <div className='flex gap-2 pt-1 lg:pt-2'>
+          <Button
+            themeColor='primary'
+            fillMode='solid'
+            style={{ flex: 1 }}
             onClick={() => setShowConfirm(true)}
             disabled={selectedSeats.length === 0}
-            aria-disabled={selectedSeats.length === 0}
           >
             Book Now
-          </button>
+          </Button>
 
-          <button
-            className='px-3 py-2 rounded border text-sm'
+          <Button
+            fillMode='outline'
             onClick={onClear}
             disabled={selectedSeats.length === 0}
           >
             Clear
-          </button>
+          </Button>
         </div>
       </div>
 
-      {/* Simple confirm modal (small) */}
+      {/* confirm modal */}
       {showConfirm && (
         <div
           role='dialog'
@@ -87,21 +91,19 @@ export default function SelectionSummary({
             </p>
 
             <div className='mt-4 flex justify-end gap-2'>
-              <button
-                className='px-3 py-2 rounded border'
-                onClick={() => setShowConfirm(false)}
-              >
+              <Button fillMode='outline' onClick={() => setShowConfirm(false)}>
                 Cancel
-              </button>
-              <button
-                className='px-3 py-2 rounded bg-blue-600 text-white'
+              </Button>
+              <Button
+                themeColor='primary'
+                fillMode='solid'
                 onClick={() => {
                   setShowConfirm(false);
                   onBook();
                 }}
               >
                 Confirm
-              </button>
+              </Button>
             </div>
           </div>
         </div>

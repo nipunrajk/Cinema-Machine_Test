@@ -7,23 +7,25 @@ type Props = {
 };
 
 const tierBg: Record<string, string> = {
-  SILVER: 'bg-slate-200 text-slate-800',
-  GOLD: 'bg-yellow-200 text-yellow-900',
-  PLATINUM: 'bg-pink-200 text-pink-900',
+  SILVER: 'bg-slate-400',
+  GOLD: 'bg-yellow-400',
+  PLATINUM: 'bg-purple-500',
 };
 
 export default function Seat({ seat, selected, onToggle }: Props) {
   const disabled = seat.status === 'booked';
 
   const base =
-    'w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded cursor-pointer select-none font-medium';
-  const classes = [
-    base,
-    disabled
-      ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400'
-      : tierBg[seat.tier],
-    selected ? 'ring-2 ring-offset-1 ring-blue-500 scale-105' : '',
-  ].join(' ');
+    'w-7 h-5 lg:w-16 lg:h-8 rounded cursor-pointer select-none transition-all duration-200';
+
+  let classes = base;
+  if (disabled) {
+    classes += ' bg-slate-300 cursor-not-allowed opacity-60';
+  } else if (selected) {
+    classes += ' bg-blue-500 scale-110 shadow-lg';
+  } else {
+    classes += ` ${tierBg[seat.tier]} hover:scale-105`;
+  }
 
   const ariaLabel = `Seat ${seat.id}, ${seat.tier}, ₹${seat.price}, ${
     seat.status === 'booked' ? 'booked' : selected ? 'selected' : 'available'
@@ -46,7 +48,6 @@ export default function Seat({ seat, selected, onToggle }: Props) {
       onClick={() => !disabled && onToggle(seat.id)}
       className={classes}
     >
-      <span className='text-xs md:text-sm'>{seat.id}</span>
     </button>
   );
 }

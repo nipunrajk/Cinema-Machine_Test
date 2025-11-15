@@ -56,9 +56,6 @@ test('booking flow: select seats -> confirm -> seats become booked and selection
   expect(bookedSeat1.closest('button')).toBeDisabled();
   expect(bookedSeat2.closest('button')).toBeDisabled();
 
-  // Summary should show no selected seats (Selected (0) or "No seats selected")
-  // Either of these is acceptable depending on UI; check for either
-  expect(
-    screen.queryByText(/Selected \(\d+\)/i) // ensure not showing previous selection
-  ).toBeTruthy();
+  // Summary should show "No seats selected"
+  expect(screen.getByText(/No seats selected/i)).toBeInTheDocument();
 });
