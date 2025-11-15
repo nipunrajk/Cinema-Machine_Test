@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from 'react-router-dom';
 import MovieListPage from './pages/MovieListPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import SeatSelectionPage from './pages/SeatSelectionPage';
@@ -49,6 +55,71 @@ function Header() {
   );
 }
 
+function AppContent() {
+  const location = useLocation();
+  const showHeader = location.pathname !== '/login';
+
+  return (
+    <div className='min-h-screen bg-slate-50'>
+      {showHeader && <Header />}
+      <main className={showHeader ? 'max-w-7xl mx-auto p-6' : ''}>
+        <Routes>
+          <Route path='/login' element={<LoginPage />} />
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute>
+                <MovieListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/movies/:movieId'
+            element={
+              <ProtectedRoute>
+                <MovieDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/movies/:movieId/theatres/:theatreId'
+            element={
+              <ProtectedRoute>
+                <SeatSelectionPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/bookings'
+            element={
+              <ProtectedRoute>
+                <MyBookingsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Not found */}
+          <Route
+            path='*'
+            element={
+              <div className='py-16 text-center'>
+                <h2 className='text-2xl font-semibold'>404 — Not found</h2>
+                <p className='mt-4'>
+                  This page doesn't exist.{' '}
+                  <Link to='/' className='text-blue-600 underline'>
+                    Back to Movies
+                  </Link>
+                </p>
+              </div>
+            }
+          />
+        </Routes>
+      </main>
+      <Toaster position='top-right' reverseOrder={false} />
+    </div>
+  );
+}
+
 export default function App() {
   const initialize = useAuthStore((s) => s.initialize);
 
@@ -59,63 +130,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className='min-h-screen bg-slate-50'>
-        <Header />
-        <main className='max-w-7xl mx-auto p-6'>
-          <Routes>
-            <Route path='/login' element={<LoginPage />} />
-            <Route
-              path='/'
-              element={
-                <ProtectedRoute>
-                  <MovieListPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/movies/:movieId'
-              element={
-                <ProtectedRoute>
-                  <MovieDetailsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/movies/:movieId/theatres/:theatreId'
-              element={
-                <ProtectedRoute>
-                  <SeatSelectionPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/bookings'
-              element={
-                <ProtectedRoute>
-                  <MyBookingsPage />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Not found */}
-            <Route
-              path='*'
-              element={
-                <div className='py-16 text-center'>
-                  <h2 className='text-2xl font-semibold'>404 — Not found</h2>
-                  <p className='mt-4'>
-                    This page doesn't exist.{' '}
-                    <Link to='/' className='text-blue-600 underline'>
-                      Back to Movies
-                    </Link>
-                  </p>
-                </div>
-              }
-            />
-          </Routes>
-        </main>
-        <Toaster position='top-right' reverseOrder={false} />
-      </div>
+      <AppContent />
     </BrowserRouter>
   );
 }
