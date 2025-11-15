@@ -265,12 +265,16 @@ export const useSeatStore = create<SeatStore>()(
     }),
     {
       name: 'seat-store-v1',
-      partialize: (state) => ({
-        selectedMovieId: state.selectedMovieId,
-        selectedTheatreId: state.selectedTheatreId,
-        selectedIds: state.selectedIds,
-        timerStartTime: state.timerStartTime,
-      }),
+      storage: {
+        getItem: (name) => {
+          const str = sessionStorage.getItem(name);
+          return str ? JSON.parse(str) : null;
+        },
+        setItem: (name, value) => {
+          sessionStorage.setItem(name, JSON.stringify(value));
+        },
+        removeItem: (name) => sessionStorage.removeItem(name),
+      },
     }
   )
 );
