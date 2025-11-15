@@ -11,7 +11,6 @@ export const theatres: Theatre[] = [
       { fromRow: 3, toRow: 5, tier: 'GOLD' },
       { fromRow: 6, toRow: 8, tier: 'PLATINUM' },
     ],
-    bookedSeats: ['A3', 'A4', 'C7', 'H2'], // sample booked seats
   },
   {
     id: 'xyz',
@@ -23,6 +22,5 @@ export const theatres: Theatre[] = [
       { fromRow: 3, toRow: 7, tier: 'GOLD' },
       { fromRow: 8, toRow: 11, tier: 'PLATINUM' },
     ],
-    bookedSeats: ['B5', 'D10', 'J1'], // sample booked seats
   },
 ];

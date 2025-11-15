@@ -45,8 +45,8 @@ test('booking flow: select seats -> confirm -> seats become booked and selection
   const confirm = await screen.findByRole('button', { name: /Confirm/i });
   await user.click(confirm);
 
-  // Success message should appear
-  expect(await screen.findByText(/Booked 2 seat\(s\)/i)).toBeInTheDocument();
+  // Success message should appear (now includes booking code)
+  expect(await screen.findByText(/Booking confirmed/i)).toBeInTheDocument();
 
   // Seats previously selected should now be disabled (booked)
   const bookedSeat1 = screen.getByRole('gridcell', { name: /^Seat A1,/i });
